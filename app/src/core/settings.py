@@ -1,7 +1,4 @@
 from pydantic_settings import BaseSettings
-from src.repository.InMemoryDatabase import InMemoryDatabase
-from src.repository.PostgresDatabase import PostgresDatabase
-from src.factories.RepositoryFactory import RepositoryFactory
 
 class Settings(BaseSettings):
     host: str
@@ -17,6 +14,3 @@ settings = Settings(
     _env_file='.env',
     _env_file_encoding='utf-8',
 )
-
-RepositoryFactory.register('memory', InMemoryDatabase)
-RepositoryFactory.register('postgresql', PostgresDatabase)
