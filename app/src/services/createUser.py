@@ -1,10 +1,7 @@
-from src.factories.UserFactory import UserFactory
-from src.repository.InMemoryDatabase import InMemoryDatabase
+from src.models.user import User
 
-# Service for creating a new user in the database.
 class CreateUserService():
-    async def create(self, repo, id, name, surname, patronymic) -> None:
-        user = UserFactory.create_user(id, name, surname, patronymic)
+    async def create(self, repo, user:User) -> None:
         await repo.create_item(user)
         
         

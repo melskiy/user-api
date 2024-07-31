@@ -7,4 +7,3 @@ class UserDB(Base):
     lastname = Column(String(100))
     firstname = Column(String(100))
     patronymic = Column(String(100))
-    

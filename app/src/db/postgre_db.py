@@ -5,11 +5,11 @@ from sqlalchemy.engine import URL
 
 connection_string = URL.create(
     drivername='postgresql+asyncpg',
-    username=settings.login,
-    password=settings.password,
-    host=settings.base_host,
-    port=settings.base_port,
-    database=settings.base_name,
+    username=settings.posgresql_login,
+    password=settings.posgresql_password,
+    host=settings.posgresql_base_host,
+    port=settings.posgresql_base_port,
+    database=settings.posgresql_base_name,
 )
 
 

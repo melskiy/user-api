@@ -1,5 +1,5 @@
 from src.repository.Interfaceses.RepositoryInterface import RepositoryInterface
-from src.db.db import Session
+from db.postgre_db import Session
 from src.models.user import User
 from src.models.UserDB import UserDB
 
@@ -8,15 +8,27 @@ class PostgresDatabase(RepositoryInterface):
         pass
     async def create_item(self,user: User):
         async with Session() as session:
-            db_user = UserDB(userid=user.user_id, lastname=user.name, firstname=user.surname, patronymic=user.patronymic)
+            db_user = UserDB(**user)
             session.add(db_user)
             await session.commit()
             
-    async def read_item(self):
-        pass
+    async def read_item(self, user_id: str) -> UserDB:
+        async with Session() as session:
+            db_user = await session.get(UserDB, user_id)
+            return db_user
 
-    async def update_item(self):
-        pass
+    async def update_item(self, user: User):
+        async with Session() as session:
+            db_user = await session.get(UserDB, user.user_id)
+            if db_user:
+                for item in user.__dict__:
+                    print(user.__dict__[item])
+                    setattr(db_user, item, user.__dict__[item])
+                await session.commit()
 
-    async def delete_item(self):
-        pass
+    async def delete_item(self, user_id: str):
+        async with Session() as session:
+            db_user = await session.get(UserDB, user_id)
+            if db_user:
+                session.delete(db_user)
+                await session.commit()

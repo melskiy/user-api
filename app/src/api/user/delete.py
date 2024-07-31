@@ -8,6 +8,6 @@ router = APIRouter(
     tags=['user'],
 )
 
-@router.delete("/delete", status_code=status.HTTP_200_OK, name="Удаление пользователя по ФИО")
+@router.delete("/delete", status_code=status.HTTP_200_OK, name="Удаление пользователя по id")
 async def input_data(methods_service: DeleteUserService = Depends(), repo: RepositoryInterface = Depends(getRepository), id: str = None):
     return await methods_service.delete(repo, id)

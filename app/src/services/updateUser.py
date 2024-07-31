@@ -1,7 +1,6 @@
 from src.repository.Interfaceses.RepositoryInterface import RepositoryInterface
-from src.factories.UserFactory import UserFactory
+from src.models.user import User
 
 class UpdateUserService():
-    async def update(self, repo:RepositoryInterface, name, surname, patronymic) -> None:
-        user = UserFactory.create_user(id, name, surname, patronymic)
+    async def update(self, repo:RepositoryInterface, user:User) -> None:
         await repo.update_item(user)

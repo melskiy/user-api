@@ -1,0 +1,8 @@
+sqlalchemy
+pydantic
+fastapi
+uvicorn
+psycopg2
+asyncpg
+redis
+pydantic-settings
