@@ -1,6 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.base_router import router
+from src.repository.postgres_database import PostgresDatabase
+from src.repository.redis_database import RedisDatabase
+from src.factories.repository_factory import RepositoryFactory
+
+RepositoryFactory.register("postgresql", PostgresDatabase)
+RepositoryFactory.register("redis", RedisDatabase)
+
 
 origins = ["*"]
 tags_dict = [
