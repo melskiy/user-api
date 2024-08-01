@@ -11,7 +11,7 @@ class RepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    async def update_item(self, item_id, item):
+    async def update_item(self, item):
         pass
 
     @abstractmethod

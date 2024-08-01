@@ -1,29 +1,13 @@
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 from src.api.base_router import router
 
-from fastapi.middleware.cors import CORSMiddleware
-
-origins = [
-   '*'
-]
+origins = ["*"]
 tags_dict = [
-    {
-        'name': 'create',
-        'description': 'Создать пользователя',
-    },
-    {
-        'name': 'get',
-        'description': 'Получить пользователя'
-    },
-    {
-        'name': 'update',
-        'description': 'Редактировать пользователя'
-    },
-    {
-        'name': 'delete',
-        'description': 'Удалить пользователя'
-    }
+    {"name": "create", "description": "Создать пользователя"},
+    {"name": "get", "description": "Получить пользователя"},
+    {"name": "update", "description": "Редактировать пользователя"},
+    {"name": "delete", "description": "Удалить пользователя"},
 ]
 
 app = FastAPI(
