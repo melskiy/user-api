@@ -4,7 +4,7 @@ from src.core.settings import settings
 
 
 connection_string = URL.create(
-    drivername="postgresql+asyncpg",
+    drivername=settings.postgresql_driver,
     username=settings.postgresql_login,
     password=settings.postgresql_password,
     host=settings.postgresql_base_host,

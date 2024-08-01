@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-@router.post("/create", status_code=status.HTTP_200_OK, name="Создание пользователя")
+@router.post("/create", status_code=status.HTTP_200_OK, name="Создание пользователя",response_model = User)
 async def input_data(
     user: User,
     methods_service: CreateUserService = Depends(),
