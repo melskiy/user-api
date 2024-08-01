@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     host: str
     port: int
     repository_type: str
-    repository_list: list = ['redis', 'postgresql']
+    repository_list: list = ["redis", "postgresql"]
     postgresql_driver: str
     postgresql_login: str
     postgresql_password: str

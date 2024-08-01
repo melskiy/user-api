@@ -1,4 +1,4 @@
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 from src.db.postgre_db import Session
 from src.models.user import User
 from src.models.user_db import UserDB

@@ -1,5 +1,5 @@
 from typing import Type
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 
 
 class RepositoryFactory:

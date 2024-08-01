@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from src.services.user.delete_user import DeleteUserService
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 from src.repository.utils.get_repository import get_repository
 
 router = APIRouter(

@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from typing import Optional
 from src.models.user import User
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 from src.db.redis_db import Session
 from redis.exceptions import RedisError
 

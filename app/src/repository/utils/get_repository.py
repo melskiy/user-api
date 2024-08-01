@@ -1,4 +1,4 @@
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 from src.repository.postgres_database import PostgresDatabase
 from src.repository.redis_database import RedisDatabase
 from src.factories.repository_factory import RepositoryFactory

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from src.services.user.create_user import CreateUserService
-from src.repository.Interfaceses.repository_interface import RepositoryInterface
+from src.repository.interfaceses.repository_interface import RepositoryInterface
 from src.repository.utils.get_repository import get_repository
 from src.models.user import User
 
