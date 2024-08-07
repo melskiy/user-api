@@ -1,7 +1,7 @@
 from src.repository.interfaceses.repository_interface import RepositoryInterface
-from src.db.postgre_db import Session
-from src.models.user import User
-from src.models.user_db import UserDB
+from src.core.db.postgre_db import Session
+from src.base.user.models.user_base_model import UserBaseModel
+from src.base.user.models.user_db import UserDB
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from fastapi import HTTPException
 
@@ -17,7 +17,7 @@ def user_db_adapter(user):
 
 
 def user_adapter(userdb):
-    user = User(
+    user = UserBaseModel(
         user_id=userdb.user_id,
         name=userdb.name,
         surname=userdb.surname,
@@ -30,7 +30,7 @@ class PostgresDatabase(RepositoryInterface):
     def __init__(self):
         pass
 
-    async def create_item(self, user: User):
+    async def create_item(self, user: UserBaseModel):
         async with Session() as session:
             try:
                 db_user = user_db_adapter(user)
@@ -46,7 +46,7 @@ class PostgresDatabase(RepositoryInterface):
             try:
                 db_user = await session.get(UserDB, user_id)
                 if not db_user:
-                    raise NoResultFound(f"User with id {user_id} not found")
+                    raise NoResultFound(f"UserBaseModel with id {user_id} not found")
                 user = user_adapter(db_user)
                 return user
             except NoResultFound as e:
@@ -54,7 +54,7 @@ class PostgresDatabase(RepositoryInterface):
             except SQLAlchemyError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def update_item(self, user: User):
+    async def update_item(self, user: UserBaseModel):
         async with Session() as session:
             try:
                 db_user = await session.get(UserDB, user.user_id)
@@ -63,7 +63,7 @@ class PostgresDatabase(RepositoryInterface):
                         setattr(db_user, item, user.__dict__[item])
                     await session.commit()
                 else:
-                    raise NoResultFound(f"User with id {user.user_id} not found")
+                    raise NoResultFound(f"UserBaseModel with id {user.user_id} not found")
             except NoResultFound as e:
                 raise HTTPException(status_code=404, detail=str(e))
             except SQLAlchemyError as e:
@@ -78,7 +78,7 @@ class PostgresDatabase(RepositoryInterface):
                     await session.delete(db_user)
                     await session.commit()
                 else:
-                    raise NoResultFound(f"User with id {user_id} not found")
+                    raise NoResultFound(f"UserBaseModel with id {user_id} not found")
             except NoResultFound as e:
                 raise HTTPException(status_code=404, detail=str(e))
             except SQLAlchemyError as e:

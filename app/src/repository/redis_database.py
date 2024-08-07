@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from typing import Optional
-from src.models.user import User
+from src.base.user.models.user_base_model import UserBaseModel
 from src.repository.interfaceses.repository_interface import RepositoryInterface
-from src.db.redis_db import Session
+from src.core.db.redis_db import Session
 from redis.exceptions import RedisError
 
 
@@ -10,7 +10,7 @@ class RedisDatabase(RepositoryInterface):
     def __init__(self):
         pass
 
-    async def create_item(self, item: User) -> User:
+    async def create_item(self, item: UserBaseModel) -> UserBaseModel:
         async with Session as session:
             try:
                 await session.set(f"user:{item.user_id}", item.model_dump_json())
@@ -18,17 +18,17 @@ class RedisDatabase(RepositoryInterface):
             except RedisError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def read_item(self, item_id: str) -> Optional[User]:
+    async def read_item(self, item_id: str) -> Optional[UserBaseModel]:
         async with Session as session:
             try:
                 item_data = await session.get(f"user:{item_id}")
                 if item_data:
-                    return User.model_validate_json(item_data)
+                    return UserBaseModel.model_validate_json(item_data)
                 raise HTTPException(status_code=404, detail="Item not found")
             except RedisError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def update_item(self, item: User) -> None:
+    async def update_item(self, item: UserBaseModel) -> None:
         async with Session as session:
             try:
                 item_data = await session.get(f"user:{item.user_id}")

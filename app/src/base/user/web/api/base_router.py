@@ -1,9 +1,7 @@
 from fastapi import APIRouter
 
-from src.api.user import update
-from src.api.user import delete
-from src.api.user import get
-from src.api.user import create
+from src.base.user.web.api import get, update
+from src.base.user.web.api import delete, create
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api.base_router import router
+from src.base.user.web.api.base_router import router
 from src.repository.postgres_database import PostgresDatabase
 from src.repository.redis_database import RedisDatabase
 from src.factories.repository_factory import RepositoryFactory
@@ -18,8 +18,8 @@ tags_dict = [
 ]
 
 app = FastAPI(
-    title="User API",
-    description="Работа с сущностью User",
+    title="UserBaseModel API",
+    description="Работа с сущностью UserBaseModel",
     version="0.1.0",
     openapi_tags=tags_dict,
 )
