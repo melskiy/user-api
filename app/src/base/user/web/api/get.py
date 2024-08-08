@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, status
+
 from src.services.user.get_user import GetUserService
-from src.repository.interfaceses.repository_interface import RepositoryInterface
-from src.repository.utils.get_repository import get_repository
 from src.base.user.models.user_base_model import UserBaseModel
 
 router = APIRouter(
@@ -17,9 +16,8 @@ router = APIRouter(
     response_model=UserBaseModel,
 )
 async def input_data(
-    methods_service: GetUserService = Depends(),
-    repo: RepositoryInterface = Depends(get_repository),
     id: str = None,
 ):
-    user = await methods_service.get(repo, id)
+    method = GetUserService()
+    user = await method.get(id)
     return user

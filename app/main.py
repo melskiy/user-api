@@ -1,18 +1,17 @@
+import sys
 
-from src.base.user.cli.cli import cli
+from src.apps.console_app import ConsoleApp
+from src.apps.web_app import WebApp
+from src.factories.app_factory import AppFactory
 from src.repository.postgres_database import PostgresDatabase
 from src.repository.redis_database import RedisDatabase
 from src.factories.repository_factory import RepositoryFactory
 
 RepositoryFactory.register("postgresql", PostgresDatabase)
 RepositoryFactory.register("redis", RedisDatabase)
-
+AppFactory.register("web", WebApp)
+AppFactory.register("console", ConsoleApp)
 
 if __name__ == "__main__":
-    # uvicorn.run(
-    #     "app:app",
-    #     host=settings.host,
-    #     port=settings.port,
-    #     reload=True,
-    # )
-    cli()
+    app = AppFactory.create(sys.argv[1])
+    app.run(sys.argv[2:])
