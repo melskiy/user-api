@@ -12,6 +12,54 @@ RepositoryFactory.register("redis", RedisDatabase)
 AppFactory.register("web", WebApp)
 AppFactory.register("console", ConsoleApp)
 
+
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+
+ioc.create("CreateUserService")
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     app = AppFactory.create(sys.argv[1])
     app.run(sys.argv[2:])

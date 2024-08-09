@@ -15,3 +15,16 @@ async def input_data(
 ):
     method = CreateUserService()
     return await method.create(user)
+
+
+class InputDataView:
+    def __init__(self, service: CreateUserService):
+        self.service: CreateUserService = service
+
+    async def __call__(self, user: UserBaseModel) -> UserBaseModel:
+        return await self.service.create(user)
+
+
+InputDataView(service)
+router.add_api_route("/create", InputDataView().__call__)
+
