@@ -1,15 +1,9 @@
-from fastapi import APIRouter, Depends, status
 from src.services.user.delete_user import DeleteUserService
 
-router = APIRouter(
-    prefix="/user",
-    tags=["user"],
-)
 
+class DeleteDataView:
+    def __init__(self, __service: DeleteUserService):
+        self.__service: DeleteUserService = __service
 
-@router.delete("/delete", status_code=status.HTTP_200_OK, name="Удаление пользователя")
-async def input_data(
-    id: str = None,
-):
-    method = DeleteUserService()
-    return await method.delete(id)
+    async def __call__(self, id: str) -> None:
+        return await self.__service.delete(id)

@@ -4,8 +4,8 @@ from src.repository.utils.get_repository import get_repository
 
 
 class GetUserService:
-    def __init__(self):
-        self.repo: RepositoryInterface = get_repository()
+    def __init__(self, repo: RepositoryInterface):
+        self.repo: RepositoryInterface = repo
 
     async def get(self, id) -> UserBaseModel:
         return await self.repo.read_item(id)

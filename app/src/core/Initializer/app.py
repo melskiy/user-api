@@ -1,6 +1,9 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from src.base.user.web.api.base_router import router
+from fastapi import FastAPI, APIRouter
+from starlette.middleware.cors import CORSMiddleware
+
+from src.core.Initializer.web_init import WebInitializer
+
+from rodi import Container
 
 origins = ["*"]
 tags_dict = [
@@ -17,7 +20,6 @@ app = FastAPI(
     openapi_tags=tags_dict,
 )
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,5 +27,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+container =
+app.include_router(WebInitializer(container).initialize())
 
-app.include_router(router)

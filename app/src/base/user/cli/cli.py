@@ -33,5 +33,3 @@ def delete(id):
 @click.argument('user')
 def create(user):
     asyncio.run(create_cli(user))
-
-
