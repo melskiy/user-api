@@ -23,4 +23,4 @@ if __name__ == "__main__":
     container = Container()
     RepositoryInitializer(container).initialize()
     ServiceInitializer(container).initialize()
-    AppFactory.create(sys.argv[1]).run(sys.argv[2:], container=container )
+    AppFactory.create(sys.argv[1]).run(sys.argv[2:], container=container)

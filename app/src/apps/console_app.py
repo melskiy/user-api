@@ -1,4 +1,3 @@
-from src.base.user.cli.cli import cli
 from src.core.Initializer.cli_init import CliInitializer
 
 
