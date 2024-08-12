@@ -1,4 +1,5 @@
 
+from fastapi import APIRouter
 from starlette import status
 from rodi import Container
 from src.base.user.models.user_base_model import UserBaseModel
@@ -15,9 +16,10 @@ from src.services.user.update_user import UpdateUserService
 
 class WebInitializer(Initialize):
 
-    def __init__(self, __container: Container, router):
+    def __init__(self, __container: Container, router: APIRouter):
         self.__container = __container
         self.router = router
+
     def initialize(self):
         container = self.__container
         router = self.router
@@ -36,5 +38,4 @@ class WebInitializer(Initialize):
                              status_code=status.HTTP_200_OK, name="Получение пользователя",
                              methods=["GET"])
 
-        return router
-
+        container.register(APIRouter, instance=router)

@@ -13,23 +13,23 @@ def cli():
 
 @cli.command()
 @click.argument('user')
-def update(user):
-    asyncio.run(update_cli(user))
+def update(user, methods_service):
+    asyncio.run(update_cli(user, methods_service))
 
 
 @cli.command()
 @click.argument('id', nargs=-1)
-def get(id):
-    asyncio.run(get_cli(id))
+def get(id, methods_service):
+    asyncio.run(get_cli(id, methods_service))
 
 
 @cli.command()
 @click.argument('id')
-def delete(id):
-    asyncio.run(delete_cli(id))
+def delete(id, methods_service):
+    asyncio.run(delete_cli(id,methods_service))
 
 
 @cli.command()
 @click.argument('user')
-def create(user):
-    asyncio.run(create_cli(user))
+def create(user, methods_service):
+    asyncio.run(create_cli(user, methods_service))
