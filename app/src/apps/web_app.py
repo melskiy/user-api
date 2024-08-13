@@ -1,14 +1,12 @@
-from fastapi import APIRouter
 
-from src.core.Initializer.app import FastApiInitializer
-from src.core.Initializer.web_init import WebInitializer
+from src.core.Initializer.fast_api_init import FastApiInitializer
 
 
 class WebApp:
+    def __init__(self, *args, **kwargs):
+        self.__container = kwargs['container']
+        self.args = args
 
-    def run(self, *args, **kwargs):
-        container = kwargs['container']
-        router = APIRouter()
-        WebInitializer(container, router).initialize()
-        FastApiInitializer(container).initialize()
+    def run(self):
+        FastApiInitializer(self.__container).initialize()
 

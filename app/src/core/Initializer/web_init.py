@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter
 from starlette import status
 from rodi import Container
@@ -22,7 +21,7 @@ class WebInitializer(Initialize):
 
     def initialize(self):
         container = self.__container
-        router = self.router
+        router = container.resolve(APIRouter)
 
         router.add_api_route("/create", CreateDataView(container.resolve(CreateUserService)).__call__,
                              status_code=status.HTTP_200_OK, name="Создание пользователя",
@@ -38,4 +37,3 @@ class WebInitializer(Initialize):
                              status_code=status.HTTP_200_OK, name="Получение пользователя",
                              methods=["GET"])
 
-        container.register(APIRouter, instance=router)

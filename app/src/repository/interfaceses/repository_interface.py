@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class RepositoryInterface(ABC):
+
     @abstractmethod
     async def create_item(self, item):
         pass

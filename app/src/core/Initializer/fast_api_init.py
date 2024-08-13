@@ -6,7 +6,8 @@ from src.core.Initializer.interfaces.Initialize import Initialize
 
 from rodi import Container
 
-from src.core.settings import settings
+from src.core.Initializer.web_init import WebInitializer
+from src.core.settings.settings import settings
 
 
 class FastApiInitializer(Initialize):
@@ -16,6 +17,9 @@ class FastApiInitializer(Initialize):
 
     def initialize(self):
         container = self.__container
+        router = APIRouter()
+        container.register(APIRouter, instance=router)
+        WebInitializer(container, container.resolve(APIRouter)).initialize()
 
         origins = ["*"]
         tags_dict = [

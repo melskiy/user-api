@@ -1,5 +1,4 @@
 from src.repository.interfaceses.repository_interface import RepositoryInterface
-from src.core.db.postgre_db import Session
 from src.base.user.models.user_base_model import UserBaseModel
 from src.base.user.models.user_db import UserDB
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
@@ -27,11 +26,11 @@ def user_adapter(userdb):
 
 
 class PostgresDatabase(RepositoryInterface):
-    def __init__(self):
-        pass
+    def __init__(self, session):
+        self.session = session
 
     async def create_item(self, user: UserBaseModel):
-        async with Session() as session:
+        async with self.session as session:
             try:
                 db_user = user_db_adapter(user)
                 session.add(db_user)
@@ -42,7 +41,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def read_item(self, user_id: str) -> UserDB:
-        async with Session() as session:
+        async with self.session as session:
             try:
                 db_user = await session.get(UserDB, user_id)
                 if not db_user:
@@ -55,7 +54,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def update_item(self, user: UserBaseModel):
-        async with Session() as session:
+        async with self.session as session:
             try:
                 db_user = await session.get(UserDB, user.user_id)
                 if db_user:
@@ -71,7 +70,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def delete_item(self, user_id: str):
-        async with Session() as session:
+        async with self.session as session:
             try:
                 db_user = await session.get(UserDB, user_id)
                 if db_user:
