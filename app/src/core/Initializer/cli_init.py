@@ -19,6 +19,7 @@ class CliInitializer(Initialize):
 
     def initialize(self, *args):
         container = self.__container
+
         @click.group()
         def cli():
             pass

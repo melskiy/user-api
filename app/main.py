@@ -1,9 +1,6 @@
 import sys
-from typing import Type
 
-import redis.asyncio as redis
 from rodi import Container
-from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.apps.console_app import ConsoleApp
 from src.apps.web_app import WebApp
@@ -18,13 +15,16 @@ from src.repository.postgres_database import PostgresDatabase
 from src.repository.redis_database import RedisDatabase
 
 if __name__ == "__main__":
-
     container = Container()
     RedisInitializer(container).initialize()
     PostgresInitializer(container).initialize()
     AppFactory.register("web", WebApp)
     AppFactory.register("console", ConsoleApp)
 
+    RepositoryFactory.register("postgresql", PostgresDatabase)
+    RepositoryFactory.register("redis", RedisDatabase)
+
     RepositoryInitializer(container).initialize()
     ServiceInitializer(container).initialize()
-    AppFactory.create(sys.argv[1]).run(sys.argv[2:], container=container)
+    app = AppFactory.create(sys.argv[1], container=container).run(sys.argv[2:])
+
