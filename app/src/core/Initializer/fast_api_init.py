@@ -1,9 +1,5 @@
-from typing import Type
-
 import uvicorn
 from fastapi import FastAPI, APIRouter
-from pydantic import BaseModel
-from pydantic_settings import BaseSettings
 from starlette.middleware.cors import CORSMiddleware
 
 from src.core.Initializer.interfaces.Initialize import Initialize

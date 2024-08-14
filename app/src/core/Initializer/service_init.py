@@ -1,6 +1,3 @@
-from typing import Type
-
-import redis
 from rodi import Container
 
 from src.core.Initializer.interfaces.Initialize import Initialize

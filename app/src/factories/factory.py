@@ -14,5 +14,5 @@ class Factory:
     def create(cls, key: str, **kwargs) -> T:
         creator = cls._creators.get(key)
         if not creator:
-            raise ValueError(f"Тип репозитория '{key}' не зарегистрирован")
+            raise ValueError(f"Тип '{key}' не зарегистрирован")
         return creator(**kwargs)

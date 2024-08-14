@@ -12,7 +12,7 @@ class PostgresDatabase(RepositoryInterface):
         self.__session = session
 
     async def create_item(self, user: UserBaseModel):
-        async with self.__session as session:
+        async with self.__session() as session:
             try:
                 db_user = user_db_adapter(user)
                 session.add(db_user)
@@ -23,7 +23,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def read_item(self, user_id: str) -> UserBaseModel:
-        async with self.__session as session:
+        async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user_id)
                 if not db_user:
@@ -36,7 +36,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def update_item(self, user: UserBaseModel):
-        async with self.__session as session:
+        async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user.user_id)
                 if db_user:
@@ -52,7 +52,7 @@ class PostgresDatabase(RepositoryInterface):
                 raise HTTPException(status_code=500, detail=str(e))
 
     async def delete_item(self, user_id: str):
-        async with self.__session as session:
+        async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user_id)
                 if db_user:

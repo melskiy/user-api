@@ -36,7 +36,7 @@ class PostgresInitializer(Initialize):
             autoflush=False,
         )
 
-        container.register(Type[async_sessionmaker], instance=session)
+        container.register(Type[async_sessionmaker], instance=lambda: session)
 
 
 
