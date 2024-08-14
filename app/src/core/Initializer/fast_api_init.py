@@ -1,26 +1,27 @@
+from typing import Type
+
 import uvicorn
 from fastapi import FastAPI, APIRouter
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings
 from starlette.middleware.cors import CORSMiddleware
 
 from src.core.Initializer.interfaces.Initialize import Initialize
 
 from rodi import Container
 
-from src.core.Initializer.web_init import WebInitializer
-from src.core.settings.settings import settings
+from src.core.settings.settings import Settings
 
 
 class FastApiInitializer(Initialize):
 
-    def __init__(self, __container: Container):
+    def __init__(self, __container: Container, settings: Settings):
         self.__container = __container
+        self.__settings = settings
 
     def initialize(self):
         container = self.__container
-        router = APIRouter()
-        container.register(APIRouter, instance=router)
-        WebInitializer(container, container.resolve(APIRouter)).initialize()
-
+        settings = self.__settings
         origins = ["*"]
         tags_dict = [
             {"name": "create", "description": "Создать пользователя"},

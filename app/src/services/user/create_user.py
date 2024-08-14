@@ -4,8 +4,8 @@ from src.repository.interfaceses.repository_interface import RepositoryInterface
 
 class CreateUserService:
     def __init__(self, repo: RepositoryInterface):
-        self.repo: RepositoryInterface = repo
+        self.__repo: RepositoryInterface = repo
 
     async def create(self, user: UserBaseModel) -> UserBaseModel:
-        return await self.repo.create_item(user)
+        return await self.__repo.create_item(user)
 

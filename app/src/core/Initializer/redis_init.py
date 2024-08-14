@@ -19,10 +19,6 @@ class RedisInitializer(Initialize):
         load_dotenv('src/core/settings/.env')
         redis_settings = RedisSettings()
 
-        session = redis.Redis(
+        container.register(Type[Redis], instance=lambda: redis.Redis(
             host=redis_settings.redis_host, port=redis_settings.redis_port, decode_responses=True
-        )
-        container.register(Redis, instance=session)
-
-
-
+        ))

@@ -15,9 +15,8 @@ from src.services.user.update_user import UpdateUserService
 
 class WebInitializer(Initialize):
 
-    def __init__(self, __container: Container, router: APIRouter):
+    def __init__(self, __container: Container):
         self.__container = __container
-        self.router = router
 
     def initialize(self):
         container = self.__container
