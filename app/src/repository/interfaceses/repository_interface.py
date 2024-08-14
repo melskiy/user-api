@@ -1,20 +1,16 @@
-from abc import ABC, abstractmethod
+from src.base.user.models.user_base_model import UserBaseModel
 
 
-class RepositoryInterface(ABC):
+class RepositoryInterface:
 
-    @abstractmethod
-    async def create_item(self, item):
-        pass
+    async def create_item(self, item) -> None:
+        raise NotImplementedError
 
-    @abstractmethod
-    async def read_item(self, item_id):
-        pass
+    async def read_item(self, item_id: str) -> UserBaseModel:
+        raise NotImplementedError
 
-    @abstractmethod
-    async def update_item(self, item):
-        pass
+    async def update_item(self, item: UserBaseModel) -> None:
+        raise NotImplementedError
 
-    @abstractmethod
-    async def delete_item(self, item_id):
-        pass
+    async def delete_item(self, item_id: str) -> None:
+        raise NotImplementedError

@@ -5,4 +5,3 @@ class Settings(BaseSettings):
     host: str
     port: int
     repository_type: str
-

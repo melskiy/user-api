@@ -9,8 +9,8 @@ from redis.exceptions import RedisError
 
 
 class RedisDatabase(RepositoryInterface):
-    def __init__(self, session):
-        self.__session: Redis = session
+    def __init__(self, session: Redis):
+        self.__session = session
 
     async def create_item(self, item: UserBaseModel) -> UserBaseModel:
         async with self.__session as session:
