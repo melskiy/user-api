@@ -9,5 +9,6 @@ class CreateUserService:
         self.__manager = manager
 
     async def create(self, user: UserBaseModel) -> None:
-        await self.__repo.create_item(user)
-        await self.__manager.notify()
+        success = await self.__repo.create_item(user)
+        if success:
+            await self.__manager.notify()

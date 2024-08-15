@@ -6,3 +6,4 @@ class UserBaseModel(BaseModel):
     name: str
     surname: str
     patronymic: str
+    email:str

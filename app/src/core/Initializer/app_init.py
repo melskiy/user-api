@@ -7,7 +7,8 @@ from src.core.ioc import container
 from src.core.settings.postgres_settings import PostgresSettings
 from src.core.settings.redis_settings import RedisSettings
 from src.core.settings.settings import Settings
-from src.events.email_event import email_event
+from src.events.email_event import EmailSubscriber
+
 from src.events.event_manger import EventManager
 from src.repository.postgres_database_factory import PostgresDatabaseFactory
 from src.repository.redis_database_factory import RedisDatabaseFactory
@@ -30,16 +31,16 @@ class AppInitializer(Initialize):
         pg_connect = await get_postgres_connection(postgres_settings)
         redis_connect = await get_redis_connection(redis_settings)
 
-        container.register('postgresql',  instance= PostgresDatabaseFactory()(pg_connect))
-        container.register('redis',  instance= RedisDatabaseFactory()(redis_connect))
+        container.register('postgresql', instance=PostgresDatabaseFactory()(pg_connect))
+        container.register('redis', instance=RedisDatabaseFactory()(redis_connect))
 
-        manager = EventManager().subscribe(email_event)
+        manager = EventManager()
+        manager.subscribe(EmailSubscriber())
+        container.register(EventManager, instance=manager)
 
         repo = container.resolve(settings.repository_type)
-        container.register(CreateUserService, instance=CreateUserService(repo, manager))
-        print(1)
+        container.register(CreateUserService, instance=CreateUserService(repo, container.resolve(EventManager)))
+        print("CreateUserService registered")
         container.register(UpdateUserService, instance=UpdateUserService(repo))
         container.register(GetUserService, instance=GetUserService(repo))
         container.register(DeleteUserService, instance=DeleteUserService(repo))
-
-

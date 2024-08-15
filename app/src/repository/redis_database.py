@@ -15,6 +15,10 @@ class RedisDatabase(RepositoryInterface):
     async def create_item(self, item: UserBaseModel) -> UserBaseModel:
         async with self.__session as session:
             try:
+                existing_user = await session.get(f"user:email:{item.email}")
+                if existing_user:
+                    raise HTTPException(status_code=400, detail="Email already exists")
+                await session.set(f"user:email:{item.email}", item.user_id)
                 await session.set(f"user:{item.user_id}", item.model_dump_json())
                 return item
             except RedisError as e:

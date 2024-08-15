@@ -8,5 +8,6 @@ def user_db_adapter(user: UserBaseModel) -> UserDB:
         name=user.name,
         surname=user.surname,
         patronymic=user.patronymic,
+        email = user.email
     )
     return db_user

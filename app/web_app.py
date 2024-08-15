@@ -11,7 +11,7 @@ from src.base.user.web.view.delete import DeleteDataView
 from src.base.user.web.view.get import GetDataView
 from src.base.user.web.view.update import UpdateDataView
 from src.core.Initializer.app_init import AppInitializer
-from src.core.ioc.ioc import container
+from src.core.ioc import container
 from src.core.settings.settings import Settings
 from src.services.user.create_user import CreateUserService
 from src.services.user.delete_user import DeleteUserService

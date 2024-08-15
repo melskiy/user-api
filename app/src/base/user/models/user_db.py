@@ -8,3 +8,4 @@ class UserDB(Base):
     name = Column(String(100))
     surname = Column(String(100))
     patronymic = Column(String(100))
+    email = Column(String(100))

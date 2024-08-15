@@ -1,3 +1,6 @@
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import async_sessionmaker
+
 from src.base.user.models.adapters.user_adapter import user_db_adapter
 from src.base.user.models.adapters.user_db_adapter import user_adapter
 from src.repository.interfaceses.repository_interface import RepositoryInterface
@@ -8,13 +11,17 @@ from fastapi import HTTPException
 
 
 class PostgresDatabase(RepositoryInterface):
-    def __init__(self, session):
+    def __init__(self, session: async_sessionmaker):
         self.__session = session
 
     async def create_item(self, user: UserBaseModel):
         async with self.__session() as session:
             try:
                 db_user = user_db_adapter(user)
+                existing_user = await session.execute(select(UserDB).where(UserDB.email == user.email))
+                if existing_user.scalar():
+                    raise HTTPException(status_code=400, detail="Email already exists")
+
                 session.add(db_user)
                 await session.commit()
                 return user
