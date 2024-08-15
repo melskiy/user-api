@@ -3,14 +3,14 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from src.base.job_title.models.adapters.job_title_adapter import job_title_adapter
 from src.base.job_title.models.adapters.job_title_db_adapter import job_title_db_adapter
 from src.base.job_title.models.job_title_db import JobTitleDB
-from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
+from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from fastapi import HTTPException
 
 
-class JobTitlePostgresDatabase(RepositoryInterface):
+class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
     def __init__(self, session: async_sessionmaker):
         self.__session = session
 

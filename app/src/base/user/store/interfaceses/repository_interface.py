@@ -1,7 +1,7 @@
 from src.base.user.models.user_base_model import UserBaseModel
 
 
-class RepositoryInterface:
+class UserRepositoryInterface:
 
     async def create_item(self, item: UserBaseModel) -> None:
         raise NotImplementedError

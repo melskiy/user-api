@@ -5,11 +5,11 @@ from redis import Redis
 
 from src.base.user.models.user_base_model import UserBaseModel
 
-from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
+from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
 from redis.exceptions import RedisError
 
 
-class UserRedisDatabase(RepositoryInterface):
+class UserRedisDatabase(UserRepositoryInterface):
     def __init__(self, session: Redis):
         self.__session = session
 

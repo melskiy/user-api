@@ -1,10 +1,12 @@
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
-from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
+from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 
 
 class CreateJobTitleService:
-    def __init__(self, repo: RepositoryInterface):
-        self.__repo: RepositoryInterface = repo
+    def __init__(self, repo: JobTitleRepositoryInterface):
+        self.__repo: JobTitleRepositoryInterface = repo
 
     async def create(self, user: JobTitleBaseModel) -> None:
-        success = await self.__repo.create_item(user)
+        await self.__repo.create_item(user)
+
+

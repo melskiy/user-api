@@ -1,7 +1,7 @@
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
 
 
-class RepositoryInterface:
+class JobTitleRepositoryInterface:
 
     async def create_item(self, item: JobTitleBaseModel) -> None:
         raise NotImplementedError

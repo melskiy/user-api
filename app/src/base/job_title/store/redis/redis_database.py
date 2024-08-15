@@ -4,11 +4,11 @@ from typing import Optional
 from redis import Redis
 
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
-from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
+from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 from redis.exceptions import RedisError
 
 
-class JobTitleRedisDatabase(RepositoryInterface):
+class JobTitleRedisDatabase(JobTitleRepositoryInterface):
     def __init__(self, session: Redis):
         self.__session = session
 

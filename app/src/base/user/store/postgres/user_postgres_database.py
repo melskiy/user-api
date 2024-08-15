@@ -3,14 +3,14 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.base.user.models.adapters.user_adapter import user_db_adapter
 from src.base.user.models.adapters.user_db_adapter import user_adapter
-from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
+from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
 from src.base.user.models.user_base_model import UserBaseModel
 from src.base.user.models.user_db import UserDB
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from fastapi import HTTPException
 
 
-class UserPostgresDatabase(RepositoryInterface):
+class UserPostgresDatabase(UserRepositoryInterface):
     def __init__(self, session: async_sessionmaker):
         self.__session = session
 
