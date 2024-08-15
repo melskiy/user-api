@@ -39,7 +39,6 @@ app = FastAPI(title="UserBaseModel API",
 
 
 async def run() -> None:
-    await AppInitializer().initialize()
     origins = ["*"]
 
     app.add_middleware(
@@ -49,21 +48,7 @@ async def run() -> None:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    app.add_api_route("/create_title_job", endpoint=CreateJobTitleView(container.resolve(CreateJobTitleService)).__call__,
-                      status_code=status.HTTP_200_OK, name="Создание должности", methods=["POST"])
-
-    app.add_api_route("/create", endpoint=CreateDataView(container.resolve(CreateUserService)).__call__,
-                      status_code=status.HTTP_200_OK, name="Создание пользователя", methods=["POST"])
-
-    app.add_api_route("/update", endpoint=UpdateDataView(container.resolve(UpdateUserService)).__call__,
-                      status_code=status.HTTP_200_OK, name="Обновление пользователя", methods=["PUT"])
-
-    app.add_api_route("/delete", endpoint=DeleteDataView(container.resolve(DeleteUserService)).__call__,
-                      status_code=status.HTTP_200_OK, name="Удаление пользователя", methods=["Delete"])
-
-    app.add_api_route("/get", endpoint=GetDataView(container.resolve(GetUserService)).__call__,
-                      status_code=status.HTTP_200_OK, name="Получение пользователя",
-                      methods=["GET"], response_model=JobTitleBaseModel)
+    await AppInitializer().initialize()
 
 
 if __name__ == '__main__':
