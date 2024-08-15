@@ -10,9 +10,6 @@ from src.services.job_title.delete_job_title import DeleteJobTitleService
 from src.services.job_title.get_job_title import GetJobTitleService
 from src.services.job_title.update_job_title import UpdateJobTitleService
 
-app_initializer = AppInitializer()
-cli_initializer = CliInitializer()
-
 @click.group()
 async def cli():
     pass
@@ -45,8 +42,8 @@ async def create(user, methods_service=container.resolve(CreateJobTitleService))
 async def run() -> None:
     await AppInitializer().initialize()
     await CliInitializer().initialize()
-    cli()
 
 
 if __name__ == '__main__':
     asyncio.run(run())
+    cli()
