@@ -1,14 +1,16 @@
 from dotenv import load_dotenv
+from sqlalchemy.ext.asyncio import async_sessionmaker
 
+from src.base.job_title.store.job_title_store_initialize import JobTitleStoreInitializer
+from src.base.user.store.user_store_initialize import UserStoreInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
-from src.core.db.get_postgre_connection import get_postgres_connection
-from src.core.db.get_redis_connection import get_redis_connection
+from src.core.db.get_postgre_connection_factory import GetPostgresConnectionFactory
+from src.core.db.get_redis_connection_factory import GetRedisConnectionFactory
 from src.core.ioc import container
 from src.core.settings.postgres_settings import PostgresSettings
 from src.core.settings.redis_settings import RedisSettings
 from src.core.settings.settings import Settings
-from src.repository.postgres.postgres_database_factory import PostgresDatabaseFactory
-from src.repository.redis.redis_database_factory import RedisDatabaseFactory
+import redis.asyncio as redis
 
 
 class AppInitializer(Initialize):
@@ -18,16 +20,15 @@ class AppInitializer(Initialize):
             _env_file=".env",
             _env_file_encoding="utf-8",
         )
+        container.register(Settings, instance=settings)
+
         load_dotenv()
+
         postgres_settings = PostgresSettings()
         redis_settings = RedisSettings()
-        pg_connect = await get_postgres_connection(postgres_settings)
-        redis_connect = await get_redis_connection(redis_settings)
 
-        container.register(get_postgres_connection, lambda: pg_connect)
-        container.register(get_redis_connection, lambda: redis_connect)
+        container.register(async_sessionmaker, instance=GetPostgresConnectionFactory()(postgres_settings))
+        # container.register(redis, instance=GetRedisConnectionFactory()(redis_settings))
 
-        container.register('postgresql', instance=PostgresDatabaseFactory()(pg_connect))
-        container.register('redis', instance=RedisDatabaseFactory()(redis_connect))
-
-        container.register(Settings, instance=settings)
+        await JobTitleStoreInitializer().initialize()
+        # await UserStoreInitializer().initialize()

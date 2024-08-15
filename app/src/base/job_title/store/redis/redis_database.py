@@ -8,7 +8,7 @@ from src.base.job_title.store.interfaceses.repository_interface import Repositor
 from redis.exceptions import RedisError
 
 
-class RedisDatabase(RepositoryInterface):
+class JobTitleRedisDatabase(RepositoryInterface):
     def __init__(self, session: Redis):
         self.__session = session
 

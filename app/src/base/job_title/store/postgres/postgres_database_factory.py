@@ -1,11 +1,11 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.base.job_title.store.postgres.postgres_database import PostgresDatabase
+from src.base.job_title.store.postgres.postgres_database import JobTitlePostgresDatabase
 
 
-class PostgresDatabaseFactory:
+class JobTitlePostgresDatabaseFactory:
 
-    def __call__(self, session: async_sessionmaker) -> PostgresDatabase:
-        return PostgresDatabase(
+    def __call__(self, session: async_sessionmaker) -> JobTitlePostgresDatabase:
+        return JobTitlePostgresDatabase(
             session=session,
         )

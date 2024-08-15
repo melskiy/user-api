@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from fastapi import HTTPException
 
 
-class PostgresDatabase(RepositoryInterface):
+class UserPostgresDatabase(RepositoryInterface):
     def __init__(self, session: async_sessionmaker):
         self.__session = session
 

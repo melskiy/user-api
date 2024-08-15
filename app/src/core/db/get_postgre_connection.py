@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from src.core.settings.postgres_settings import PostgresSettings
 
 
-async def get_postgres_connection(settings: PostgresSettings):
+async def get_postgres_connection(settings: PostgresSettings) -> async_sessionmaker:
 
     connection_string = URL.create(
         drivername=settings.postgresql_driver,

@@ -1,11 +1,11 @@
 from redis.asyncio import Redis
 
-from src.base.job_title.store.redis.redis_database import RedisDatabase
+from src.base.job_title.store.redis.redis_database import JobTitleRedisDatabase
 
 
-class RedisDatabaseFactory:
+class JobTitleRedisDatabaseFactory:
 
-    def __call__(self, session: Redis, ) -> RedisDatabase:
-        return RedisDatabase(
+    def __call__(self, session: Redis, ) -> JobTitleRedisDatabase:
+        return JobTitleRedisDatabase(
             session=session,
         )
