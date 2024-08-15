@@ -24,6 +24,9 @@ class AppInitializer(Initialize):
         pg_connect = await get_postgres_connection(postgres_settings)
         redis_connect = await get_redis_connection(redis_settings)
 
+        container.register(get_postgres_connection, lambda: pg_connect)
+        container.register(get_redis_connection, lambda: redis_connect)
+
         container.register('postgresql', instance=PostgresDatabaseFactory()(pg_connect))
         container.register('redis', instance=RedisDatabaseFactory()(redis_connect))
 

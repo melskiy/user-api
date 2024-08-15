@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.base.job_title.store.postgres_database import PostgresDatabase
+from src.base.job_title.store.postgres.postgres_database import PostgresDatabase
 
 
 class PostgresDatabaseFactory:
