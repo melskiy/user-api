@@ -51,13 +51,13 @@ async def run() -> None:
     app.add_api_route("/create", endpoint=CreateDataView(container.resolve(CreateUserService)).__call__,
                       status_code=status.HTTP_200_OK, name="Создание пользователя", methods=["POST"])
 
-    app.add_api_route("/update", UpdateDataView(container.resolve(UpdateUserService)).__call__,
+    app.add_api_route("/update", endpoint=UpdateDataView(container.resolve(UpdateUserService)).__call__,
                       status_code=status.HTTP_200_OK, name="Обновление пользователя", methods=["PUT"])
 
-    app.add_api_route("/delete", DeleteDataView(container.resolve(DeleteUserService)).__call__,
+    app.add_api_route("/delete", endpoint=DeleteDataView(container.resolve(DeleteUserService)).__call__,
                       status_code=status.HTTP_200_OK, name="Удаление пользователя", methods=["Delete"])
 
-    app.add_api_route("/get", GetDataView(container.resolve(GetUserService)).__call__,
+    app.add_api_route("/get", endpoint=GetDataView(container.resolve(GetUserService)).__call__,
                       status_code=status.HTTP_200_OK, name="Получение пользователя",
                       methods=["GET"], response_model=UserBaseModel)
 

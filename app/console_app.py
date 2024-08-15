@@ -12,11 +12,6 @@ from src.services.user.update_user import UpdateUserService
 app_initializer = AppInitializer()
 
 
-async def run() -> None:
-    await AppInitializer().initialize()
-    cli()
-
-
 @click.group()
 async def cli():
     pass
@@ -44,6 +39,11 @@ async def delete(id, methods_service=container.resolve(DeleteUserService)):
 @click.argument('user')
 async def create(user, methods_service=container.resolve(CreateUserService)):
     await methods_service.create(user)
+
+
+async def run() -> None:
+    await AppInitializer().initialize()
+    cli()
 
 
 if __name__ == '__main__':
