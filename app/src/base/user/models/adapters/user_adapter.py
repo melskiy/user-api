@@ -8,6 +8,6 @@ def user_db_adapter(user: JobTitleBaseModel) -> UserDB:
         name=user.name,
         surname=user.surname,
         patronymic=user.patronymic,
-        email = user.email
+        email=user.email
     )
     return db_user

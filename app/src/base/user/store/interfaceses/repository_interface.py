@@ -3,7 +3,7 @@ from src.base.user.models.user_base_model import UserBaseModel
 
 class RepositoryInterface:
 
-    async def create_item(self, item) -> None:
+    async def create_item(self, item: UserBaseModel) -> None:
         raise NotImplementedError
 
     async def read_item(self, item_id: str) -> UserBaseModel:
