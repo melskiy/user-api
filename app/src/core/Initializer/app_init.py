@@ -1,8 +1,5 @@
 from dotenv import load_dotenv
 
-from src.base.job_title.web.job_title_web_initializer import JobTitleWebInitializer
-from src.base.user.events.user_event_initilizer import UserEventInitializer
-from src.base.user.web.user_web_initializer import UserWebInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.db.get_postgre_connection import get_postgres_connection
 from src.core.db.get_redis_connection import get_redis_connection
@@ -12,11 +9,6 @@ from src.core.settings.redis_settings import RedisSettings
 from src.core.settings.settings import Settings
 from src.repository.postgres.postgres_database_factory import PostgresDatabaseFactory
 from src.repository.redis.redis_database_factory import RedisDatabaseFactory
-from src.services.user.user_service_initializer import UserServiceInitializer
-
-
-class JobTitleServiceInitializer:
-    pass
 
 
 class AppInitializer(Initialize):
@@ -36,8 +28,3 @@ class AppInitializer(Initialize):
         container.register('redis', instance=RedisDatabaseFactory()(redis_connect))
 
         container.register(Settings, instance=settings)
-        await UserServiceInitializer().initialize()
-        await JobTitleServiceInitializer().initialize()
-        await UserEventInitializer().initialize()
-        await UserWebInitializer().initialize()
-        await JobTitleWebInitializer().initialize()

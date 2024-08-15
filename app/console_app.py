@@ -3,18 +3,15 @@ import asyncio
 import asyncclick as click
 
 from src.core.Initializer.app_init import AppInitializer
+from src.core.Initializer.cli_init import CliInitializer
 from src.core.ioc import container
 from src.services.job_title.create_job_title import CreateJobTitleService
 from src.services.job_title.delete_job_title import DeleteJobTitleService
 from src.services.job_title.get_job_title import GetJobTitleService
 from src.services.job_title.update_job_title import UpdateJobTitleService
-from src.services.user.create_user import CreateUserService
-from src.services.user.delete_user import DeleteUserService
-from src.services.user.get_user import GetUserService
-from src.services.user.update_user import UpdateUserService
 
 app_initializer = AppInitializer()
-
+cli_initializer = CliInitializer()
 
 @click.group()
 async def cli():
@@ -47,6 +44,7 @@ async def create(user, methods_service=container.resolve(CreateJobTitleService))
 
 async def run() -> None:
     await AppInitializer().initialize()
+    await CliInitializer().initialize()
     cli()
 
 
