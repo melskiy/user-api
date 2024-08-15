@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 
+from src.base.job_title.web.job_title_web_initializer import JobTitleInitializer
+from src.base.user.events.user_event_initilizer import UserEventInitializer
+from src.base.user.web.user_web_initializer import UserWebInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.db.get_postgre_connection import get_postgres_connection
 from src.core.db.get_redis_connection import get_redis_connection
@@ -39,19 +42,8 @@ class AppInitializer(Initialize):
         container.register('postgresql', instance=PostgresDatabaseFactory()(pg_connect))
         container.register('redis', instance=RedisDatabaseFactory()(redis_connect))
 
-        manager = EventManagerFactory()()
+        container.register(Settings, instance=settings)
 
-        manager.subscribe(EmailSubscriber())
-        container.register(EventManager, instance=manager)
-
-        repo = container.resolve(settings.repository_type)
-
-        container.register(CreateUserService, instance=CreateUserService(repo, container.resolve(EventManager)))
-        container.register(UpdateUserService, instance=UpdateUserService(repo))
-        container.register(GetUserService, instance=GetUserService(repo))
-        container.register(DeleteUserService, instance=DeleteUserService(repo))
-
-        container.register(CreateJobTitleService, instance=CreateJobTitleService(repo))
-        container.register(UpdateJobTitleService, instance=UpdateJobTitleService(repo))
-        container.register(GetJobTitleService, instance=UpdateJobTitleService(repo))
-        container.register(DeleteJobTitleService, instance=UpdateJobTitleService(repo))
+        await UserEventInitializer().initialize()
+        await UserWebInitializer().initialize()
+        await JobTitleInitializer().initialize()
