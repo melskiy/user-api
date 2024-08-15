@@ -1,7 +1,7 @@
 from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
 
 
-class DeleteUserService:
+class DeleteJobTitleService:
     def __init__(self, repo: RepositoryInterface):
         self.__repo: RepositoryInterface = repo
 

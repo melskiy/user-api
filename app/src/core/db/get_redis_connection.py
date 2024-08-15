@@ -1,4 +1,4 @@
-import redis
+import redis.asyncio as redis
 
 from src.core.settings.redis_settings import RedisSettings
 

@@ -1,6 +1,6 @@
 from src.base.user.models.user_base_model import UserBaseModel
 from src.events.event_manger import EventManager
-from src.repository.interfaceses.repository_interface import RepositoryInterface
+from src.base.user.store.interfaceses.repository_interface import RepositoryInterface
 
 
 class CreateUserService:

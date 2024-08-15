@@ -1,6 +1,6 @@
 from redis.asyncio import Redis
 
-from src.repository.redis_database import RedisDatabase
+from src.base.job_title.store.redis_database import RedisDatabase
 
 
 class RedisDatabaseFactory:

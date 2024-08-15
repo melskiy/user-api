@@ -1,5 +1,5 @@
-from src.services.user.create_user import CreateUserService
 from src.base.user.models.user_base_model import UserBaseModel
+from src.services.user.create_user import CreateUserService
 
 
 class CreateDataView:
