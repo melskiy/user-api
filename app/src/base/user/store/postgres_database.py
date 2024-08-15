@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from src.base.user.models.adapters.user_adapter import user_db_adapter
 from src.base.user.models.adapters.user_db_adapter import user_adapter
 from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
-from src.base.user.models.user_base_model import JobTitleBaseModel
+from src.base.user.models.user_base_model import UserBaseModel
 from src.base.user.models.user_db import UserDB
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from fastapi import HTTPException
@@ -14,7 +14,7 @@ class PostgresDatabase(RepositoryInterface):
     def __init__(self, session: async_sessionmaker):
         self.__session = session
 
-    async def create_item(self, user: JobTitleBaseModel):
+    async def create_item(self, user: UserBaseModel):
         async with self.__session() as session:
             try:
                 db_user = user_db_adapter(user)
@@ -29,7 +29,7 @@ class PostgresDatabase(RepositoryInterface):
                 await session.rollback()
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def read_item(self, user_id: str) -> JobTitleBaseModel:
+    async def read_item(self, user_id: str) -> UserBaseModel:
         async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user_id)
@@ -42,7 +42,7 @@ class PostgresDatabase(RepositoryInterface):
             except SQLAlchemyError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def update_item(self, user: JobTitleBaseModel):
+    async def update_item(self, user: UserBaseModel):
         async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user.user_id)

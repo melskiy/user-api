@@ -3,7 +3,8 @@ from typing import Optional
 
 from redis import Redis
 
-from src.base.user.models.user_base_model import JobTitleBaseModel
+from src.base.user.models.user_base_model import UserBaseModel
+
 from src.base.job_title.store.interfaceses.repository_interface import RepositoryInterface
 from redis.exceptions import RedisError
 
@@ -12,7 +13,7 @@ class RedisDatabase(RepositoryInterface):
     def __init__(self, session: Redis):
         self.__session = session
 
-    async def create_item(self, item: JobTitleBaseModel) -> JobTitleBaseModel:
+    async def create_item(self, item: UserBaseModel) -> UserBaseModel:
         async with self.__session as session:
             try:
                 existing_user = await session.get(f"user:email:{item.email}")
@@ -24,17 +25,17 @@ class RedisDatabase(RepositoryInterface):
             except RedisError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def read_item(self, item_id: str) -> Optional[JobTitleBaseModel]:
+    async def read_item(self, item_id: str) -> Optional[UserBaseModel]:
         async with self.__session as session:
             try:
                 item_data = await session.get(f"user:{item_id}")
                 if item_data:
-                    return JobTitleBaseModel.model_validate_json(item_data)
+                    return UserBaseModel.model_validate_json(item_data)
                 raise HTTPException(status_code=404, detail="Item not found")
             except RedisError as e:
                 raise HTTPException(status_code=500, detail=str(e))
 
-    async def update_item(self, item: JobTitleBaseModel) -> None:
+    async def update_item(self, item: UserBaseModel) -> None:
         async with self.__session as session:
             try:
                 item_data = await session.get(f"user:{item.user_id}")
