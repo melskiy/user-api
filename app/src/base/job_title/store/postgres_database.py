@@ -14,13 +14,13 @@ class PostgresDatabase(RepositoryInterface):
     def __init__(self, session: async_sessionmaker):
         self.__session = session
 
-    async def create_item(self, user: JobTitleBaseModel):
+    async def create_item(self, job_title: JobTitleBaseModel):
         async with self.__session() as session:
             try:
-                db_user = job_title_db_adapter(user)
+                db_user = job_title_db_adapter(job_title)
                 session.add(db_user)
                 await session.commit()
-                return user
+                return job_title
             except SQLAlchemyError as e:
                 await session.rollback()
                 raise HTTPException(status_code=500, detail=str(e))
