@@ -35,8 +35,8 @@ class WebInitializer(Initialize):
             allow_headers=["*"],
         )
         container.register(FastAPI, instance=app)
-        # await UserEventInitializer().initialize()
-        # await UserServiceInitializer().initialize()
+        await UserEventInitializer().initialize()
+        await UserServiceInitializer().initialize()
         await JobTitleServiceInitializer().initialize()
-        # await UserWebInitializer(app=container.resolve(FastAPI)).initialize()
+        await UserWebInitializer(app=container.resolve(FastAPI)).initialize()
         await JobTitleWebInitializer(app=container.resolve(FastAPI)).initialize()

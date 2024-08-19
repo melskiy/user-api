@@ -1,13 +1,13 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
+from src.base.job_title.exeptions.job_title_database_error import JobTitleDatabaseError
+from src.base.job_title.exeptions.job_title_not_found_error import JobTitleNotFoundError
 from src.base.job_title.store.adapters.job_title_adapter import job_title_adapter
 from src.base.job_title.store.adapters import job_title_db_adapter
 from src.base.job_title.models.job_title_db import JobTitleDB
 from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
-from sqlalchemy.exc import SQLAlchemyError, NoResultFound
-from fastapi import HTTPException
 
 
 class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
@@ -17,26 +17,24 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
     async def create_item(self, job_title: JobTitleBaseModel):
         async with self.__session() as session:
             try:
-                db_user = job_title_db_adapter(job_title)
+                db_user = job_title_adapter(job_title)
                 session.add(db_user)
                 await session.commit()
                 return job_title
-            except SQLAlchemyError as e:
+            except Exception as e:
                 await session.rollback()
-                raise HTTPException(status_code=500, detail=str(e))
+                raise JobTitleDatabaseError(str(e))
 
     async def read_item(self, user_id: str) -> JobTitleBaseModel:
         async with self.__session() as session:
             try:
-                db_user= await session.get(JobTitleDB, user_id)
+                db_user = await session.get(JobTitleDB, user_id)
                 if not db_user:
-                    raise NoResultFound(f"UserBaseModel with id {user_id} not found")
-                user = job_title_adapter(db_user)
+                    raise JobTitleNotFoundError(f"Job title with ID {user_id} not found.")
+                user = job_title_db_adapter(db_user)
                 return user
-            except NoResultFound as e:
-                raise HTTPException(status_code=404, detail=str(e))
-            except SQLAlchemyError as e:
-                raise HTTPException(status_code=500, detail=str(e))
+            except Exception as e:
+                raise JobTitleDatabaseError(str(e))
 
     async def update_item(self, user: JobTitleBaseModel):
         async with self.__session() as session:
@@ -47,12 +45,10 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                         setattr(db_user, item, user.__dict__[item])
                     await session.commit()
                 else:
-                    raise NoResultFound(f"UserBaseModel with id {user.user_id} not found")
-            except NoResultFound as e:
-                raise HTTPException(status_code=404, detail=str(e))
-            except SQLAlchemyError as e:
+                    raise JobTitleNotFoundError(f"Job title with ID {user.user_id} not found.")
+            except Exception as e:
                 await session.rollback()
-                raise HTTPException(status_code=500, detail=str(e))
+                raise JobTitleDatabaseError(str(e))
 
     async def delete_item(self, user_id: str):
         async with self.__session() as session:
@@ -62,9 +58,7 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                     await session.delete(db_user)
                     await session.commit()
                 else:
-                    raise NoResultFound(f"UserBaseModel with id {user_id} not found")
-            except NoResultFound as e:
-                raise HTTPException(status_code=404, detail=str(e))
-            except SQLAlchemyError as e:
+                    raise JobTitleNotFoundError(f"Job title with ID {user_id} not found.")
+            except Exception as e:
                 await session.rollback()
-                raise HTTPException(status_code=500, detail=str(e))
+                raise JobTitleDatabaseError(str(e))

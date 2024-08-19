@@ -17,6 +17,6 @@ class JobTitleExceptionHandlersInitializer(Initialize):
 
     async def initialize(self):
         error_handler = JobTitleErrorHandler(self.__app)
-        # error_handler.register_handler(JobTitleDatabaseError, handle_job_title_database_error)
-        # error_handler.register_handler(JobTitleAlreadyExistsError, handle_job_title_exists)
+        error_handler.register_handler(JobTitleDatabaseError, handle_job_title_database_error)
+        error_handler.register_handler(JobTitleAlreadyExistsError, handle_job_title_exists)
         error_handler.register_handler(JobTitleNotFoundError, handle_job_title_not_found)

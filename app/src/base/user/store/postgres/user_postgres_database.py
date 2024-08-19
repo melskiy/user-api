@@ -9,7 +9,6 @@ from src.base.user.store.adapters.user_db_adapter import user_adapter
 from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
 from src.base.user.models.user_base_model import UserBaseModel
 from src.base.user.models.user_db import UserDB
-from sqlalchemy.exc import SQLAlchemyError
 
 
 class UserPostgresDatabase(UserRepositoryInterface):
@@ -19,14 +18,14 @@ class UserPostgresDatabase(UserRepositoryInterface):
     async def create_item(self, user: UserBaseModel) -> None:
         async with self.__session() as session:
             try:
-                db_user = user_db_adapter(user)
+                db_user = user_adapter(user)
                 existing_user = await session.execute(select(UserDB).where(UserDB.email == user.email))
                 if existing_user.scalar():
                     raise UserAlreadyExistsError()
 
                 session.add(db_user)
                 await session.commit()
-            except SQLAlchemyError as e:
+            except Exception as e:
                 await session.rollback()
                 raise UserDatabaseError(str(e))
 
@@ -38,7 +37,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                     raise UserNotFoundError()
                 user = user_adapter(db_user)
                 return user
-            except SQLAlchemyError as e:
+            except Exception as e:
                 raise UserDatabaseError(str(e))
 
     async def update_item(self, user: UserBaseModel):
@@ -51,7 +50,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                     await session.commit()
                 else:
                     raise UserNotFoundError()
-            except SQLAlchemyError as e:
+            except Exception as e:
                 await session.rollback()
                 raise UserDatabaseError(str(e))
 
@@ -64,6 +63,6 @@ class UserPostgresDatabase(UserRepositoryInterface):
                     await session.commit()
                 else:
                     raise UserNotFoundError()
-            except SQLAlchemyError as e:
+            except Exception as e:
                 await session.rollback()
                 raise UserDatabaseError(str(e))
