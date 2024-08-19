@@ -5,10 +5,10 @@ import asyncclick as click
 from src.core.Initializer.app_init import AppInitializer
 from src.core.Initializer.cli_init import CliInitializer
 from src.core.ioc import container
-from src.services.job_title.create_job_title import CreateJobTitleService
-from src.services.job_title.delete_job_title import DeleteJobTitleService
-from src.services.job_title.get_job_title import GetJobTitleService
-from src.services.job_title.update_job_title import UpdateJobTitleService
+from src.base.job_title.services.create_job_title import CreateJobTitleService
+from src.base.job_title.services.delete_job_title import DeleteJobTitleService
+from src.base.job_title.services.get_job_title import GetJobTitleService
+from src.base.job_title.services.update_job_title import UpdateJobTitleService
 
 @click.group()
 async def cli():

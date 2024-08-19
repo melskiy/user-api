@@ -2,17 +2,16 @@ from src.base.user.store.interfaceses.repository_interface import UserRepository
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
 from src.events.event_manger import EventManager
-from src.services.user.create_user import CreateUserService
-from src.services.user.delete_user import DeleteUserService
-from src.services.user.get_user import GetUserService
-from src.services.user.update_user import UpdateUserService
+from src.base.user.services.create_user import CreateUserService
+from src.base.user.services.delete_user import DeleteUserService
+from src.base.user.services.get_user import GetUserService
+from src.base.user.services.update_user import UpdateUserService
 
 
 class UserServiceInitializer(Initialize):
 
     async def initialize(self):
         repo = container.resolve(UserRepositoryInterface)
-
         container.register(CreateUserService, instance=CreateUserService(repo, container.resolve(EventManager)))
         container.register(UpdateUserService, instance=UpdateUserService(repo))
         container.register(GetUserService, instance=GetUserService(repo))

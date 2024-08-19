@@ -1,6 +1,5 @@
 from src.base.user.models.user_base_model import UserBaseModel
-from src.services.user.get_user import GetUserService
-
+from src.base.user.services.get_user import GetUserService
 
 
 class GetDataView:

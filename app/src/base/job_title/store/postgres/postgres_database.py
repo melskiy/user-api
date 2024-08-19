@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.base.job_title.models.adapters.job_title_adapter import job_title_adapter
-from src.base.job_title.models.adapters.job_title_db_adapter import job_title_db_adapter
+from src.base.job_title.store.adapters.job_title_adapter import job_title_adapter
+from src.base.job_title.store.adapters import job_title_db_adapter
 from src.base.job_title.models.job_title_db import JobTitleDB
 from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 

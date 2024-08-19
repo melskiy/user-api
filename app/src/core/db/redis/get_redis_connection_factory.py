@@ -1,5 +1,5 @@
 import redis.asyncio as redis
-from src.core.db.get_redis_connection import get_redis_connection
+from src.core.db.redis.get_redis_connection import get_redis_connection
 from src.core.settings.redis_settings import RedisSettings
 
 

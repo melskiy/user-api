@@ -1,4 +1,4 @@
-from src.services.job_title.get_job_title import GetJobTitleService
+from src.base.job_title.services.get_job_title import GetJobTitleService
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
 
 

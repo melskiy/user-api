@@ -4,7 +4,7 @@ from src.base.job_title.store.interfaceses.repository_interface import JobTitleR
 
 class CreateJobTitleService:
     def __init__(self, repo: JobTitleRepositoryInterface):
-        self.__repo: JobTitleRepositoryInterface = repo
+        self.__repo = repo
 
     async def create(self, user: JobTitleBaseModel) -> None:
         await self.__repo.create_item(user)

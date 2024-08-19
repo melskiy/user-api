@@ -9,4 +9,4 @@ class JobTitleRedisDatabaseInitializer(Initialize):
 
     async def initialize(self):
         redis_connect = await container.resolve(redis)
-        container.register(JobTitleRedisDatabase, JobTitleRedisDatabaseFactory()(redis_connect))
+        container.register(JobTitleRedisDatabase, instance=JobTitleRedisDatabaseFactory()(redis_connect))

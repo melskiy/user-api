@@ -6,8 +6,8 @@ from src.base.user.events.user_event_initilizer import UserEventInitializer
 from src.base.user.web.user_web_initializer import UserWebInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
-from src.services.job_title.job_title_service_initializer import JobTitleServiceInitializer
-from src.services.user.user_service_initializer import UserServiceInitializer
+from src.base.job_title.services.job_title_service_initializer import JobTitleServiceInitializer
+from src.base.user.services.user_service_initializer import UserServiceInitializer
 
 
 class WebInitializer(Initialize):
@@ -35,8 +35,8 @@ class WebInitializer(Initialize):
             allow_headers=["*"],
         )
         container.register(FastAPI, instance=app)
-        await UserEventInitializer().initialize()
-        await UserServiceInitializer().initialize()
+        # await UserEventInitializer().initialize()
+        # await UserServiceInitializer().initialize()
         await JobTitleServiceInitializer().initialize()
-        await UserWebInitializer(app=container.resolve(FastAPI)).initialize()
+        # await UserWebInitializer(app=container.resolve(FastAPI)).initialize()
         await JobTitleWebInitializer(app=container.resolve(FastAPI)).initialize()

@@ -1,4 +1,4 @@
-from src.services.user.update_user import UpdateUserService
+from src.base.user.services.update_user import UpdateUserService
 from src.base.user.models.user_base_model import UserBaseModel
 
 

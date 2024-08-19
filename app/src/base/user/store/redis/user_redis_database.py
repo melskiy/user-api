@@ -1,12 +1,11 @@
-from fastapi import HTTPException
-from typing import Optional
-
-from redis import Redis
-
-from src.base.user.models.user_base_model import UserBaseModel
-
-from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
+from redis.asyncio import Redis
 from redis.exceptions import RedisError
+
+from src.base.user.exeptions.user_already_exists_error import UserAlreadyExistsError
+from src.base.user.exeptions.user_database_error import UserDatabaseError
+from src.base.user.exeptions.user_not_found_error import UserNotFoundError
+from src.base.user.models.user_base_model import UserBaseModel
+from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
 
 
 class UserRedisDatabase(UserRepositoryInterface):
@@ -18,22 +17,22 @@ class UserRedisDatabase(UserRepositoryInterface):
             try:
                 existing_user = await session.get(f"user:email:{item.email}")
                 if existing_user:
-                    raise HTTPException(status_code=400, detail="Email already exists")
+                    raise UserAlreadyExistsError()
                 await session.set(f"user:email:{item.email}", item.user_id)
                 await session.set(f"user:{item.user_id}", item.model_dump_json())
                 return item
             except RedisError as e:
-                raise HTTPException(status_code=500, detail=str(e))
+                raise UserDatabaseError(str(e))
 
-    async def read_item(self, item_id: str) -> Optional[UserBaseModel]:
+    async def read_item(self, item_id: str) -> UserBaseModel:
         async with self.__session as session:
             try:
                 item_data = await session.get(f"user:{item_id}")
                 if item_data:
                     return UserBaseModel.model_validate_json(item_data)
-                raise HTTPException(status_code=404, detail="Item not found")
+                raise UserNotFoundError()
             except RedisError as e:
-                raise HTTPException(status_code=500, detail=str(e))
+                raise UserDatabaseError(str(e))
 
     async def update_item(self, item: UserBaseModel) -> None:
         async with self.__session as session:
@@ -42,13 +41,13 @@ class UserRedisDatabase(UserRepositoryInterface):
                 if item_data:
                     await session.set(f"user:{item.user_id}", item.model_dump_json())
                 else:
-                    raise HTTPException(status_code=404, detail="Item not found")
+                    raise UserNotFoundError()
             except RedisError as e:
-                raise HTTPException(status_code=500, detail=str(e))
+                raise UserDatabaseError(str(e))
 
     async def delete_item(self, item_id: str) -> None:
         async with self.__session as session:
             try:
                 await session.delete(f"user:{item_id}")
             except RedisError as e:
-                raise HTTPException(status_code=500, detail=str(e))
+                raise UserDatabaseError(str(e))

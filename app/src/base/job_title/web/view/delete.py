@@ -1,4 +1,4 @@
-from src.services.job_title.delete_job_title import DeleteJobTitleService
+from src.base.job_title.services.delete_job_title import DeleteJobTitleService
 
 
 class DeleteJobTitleView:

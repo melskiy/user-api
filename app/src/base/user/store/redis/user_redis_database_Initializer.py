@@ -1,4 +1,4 @@
-from src.base.job_title.store import redis
+import redis.asyncio as redis
 from src.base.user.store.redis.user_redis_database import UserRedisDatabase
 from src.base.user.store.redis.user_redis_database_factory import UserRedisDatabaseFactory
 from src.core.Initializer.interfaces.Initialize import Initialize

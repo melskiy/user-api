@@ -1,4 +1,4 @@
-from src.services.user.delete_user import DeleteUserService
+from src.base.user.services.delete_user import DeleteUserService
 
 
 class DeleteDataView:
