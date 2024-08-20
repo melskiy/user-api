@@ -1,6 +1,10 @@
+from src.base.user.events.UserEvent import UserEvent
 from src.events.subscriber import Subscriber
 
 
-class UserCreateSubscriber(Subscriber):
-    async def update(self):
-        print("Отправлено на почту")
+class UserCreateEvent(UserEvent):
+    def __init__(self, event: Subscriber):
+        self.__event = event
+
+    def __call__(self):
+        self.__event.update()

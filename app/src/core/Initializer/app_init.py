@@ -24,14 +24,20 @@ class AppInitializer(Initialize):
             _env_file_encoding="utf-8",
         )
         container.register(Settings, instance=settings)
-
+        store_type = settings.repository_type
         load_dotenv()
+        store_initializers = {
+            'postgressql': lambda: container.register(
+                async_sessionmaker,
+                instance=GetPostgresConnectionFactory()(PostgresSettings())
+            ),
+            'redis': lambda: container.register(
+                Redis,
+                instance=GetRedisConnectionFactory()(RedisSettings())
+            )
+        }
 
-        # postgres_settings = PostgresSettings()
-        redis_settings = RedisSettings()
-
-        # container.register(async_sessionmaker, instance=GetPostgresConnectionFactory()(postgres_settings))
-        container.register(Redis, instance=GetRedisConnectionFactory()(redis_settings))
+        store_initializers.get(store_type)()
 
         await JobTitleStoreInitializer().initialize()
         await UserStoreInitializer().initialize()
