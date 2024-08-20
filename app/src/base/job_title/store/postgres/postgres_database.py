@@ -4,7 +4,7 @@ from src.base.job_title.exeptions.job_title_database_error import JobTitleDataba
 from src.base.job_title.exeptions.job_title_not_found_error import JobTitleNotFoundError
 from src.base.job_title.store.adapters.job_title_adapter import job_title_adapter
 from src.base.job_title.store.adapters import job_title_db_adapter
-from src.base.job_title.models.job_title_db import JobTitleDB
+from src.base.job_title.store.models.job_title_db import JobTitleDB
 from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
 
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel

@@ -2,12 +2,9 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from src.base.job_title.web.job_title_web_initializer import JobTitleWebInitializer
-from src.base.user.events.user_event_initilizer import UserEventInitializer
 from src.base.user.web.user_web_initializer import UserWebInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
-from src.base.job_title.services.job_title_service_initializer import JobTitleServiceInitializer
-from src.base.user.services.user_service_initializer import UserServiceInitializer
 
 
 class WebInitializer(Initialize):
@@ -35,8 +32,5 @@ class WebInitializer(Initialize):
             allow_headers=["*"],
         )
         container.register(FastAPI, instance=app)
-        await UserEventInitializer().initialize()
-        await UserServiceInitializer().initialize()
-        await JobTitleServiceInitializer().initialize()
         await UserWebInitializer(app=container.resolve(FastAPI)).initialize()
         await JobTitleWebInitializer(app=container.resolve(FastAPI)).initialize()

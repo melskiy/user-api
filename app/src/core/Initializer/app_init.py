@@ -2,7 +2,10 @@ import redis.asyncio as Redis
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
+from src.base.job_title.services.job_title_service_initializer import JobTitleServiceInitializer
 from src.base.job_title.store.job_title_store_initialize import JobTitleStoreInitializer
+from src.base.user.events.user_event_initilizer import UserEventInitializer
+from src.base.user.services.user_service_initializer import UserServiceInitializer
 from src.base.user.store.user_store_initialize import UserStoreInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.db.postgres.get_postgre_connection_factory import GetPostgresConnectionFactory
@@ -24,11 +27,14 @@ class AppInitializer(Initialize):
 
         load_dotenv()
 
-        postgres_settings = PostgresSettings()
+        # postgres_settings = PostgresSettings()
         redis_settings = RedisSettings()
 
-        container.register(async_sessionmaker, instance=GetPostgresConnectionFactory()(postgres_settings))
+        # container.register(async_sessionmaker, instance=GetPostgresConnectionFactory()(postgres_settings))
         container.register(Redis, instance=GetRedisConnectionFactory()(redis_settings))
 
         await JobTitleStoreInitializer().initialize()
         await UserStoreInitializer().initialize()
+        await JobTitleServiceInitializer().initialize()
+        await UserEventInitializer().initialize()
+        await UserServiceInitializer().initialize()

@@ -1,5 +1,11 @@
 from sqlalchemy import String, Column
-from src.base.user.models.base import Base
+
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import MetaData
+
+metadata_obj = MetaData(schema="userprofile")
+
+Base = declarative_base(metadata=metadata_obj)
 
 
 class UserDB(Base):
@@ -9,4 +15,3 @@ class UserDB(Base):
     surname = Column(String(100))
     patronymic = Column(String(100))
     email = Column(String(100))
-

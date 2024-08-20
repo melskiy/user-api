@@ -1,4 +1,4 @@
-from src.base.user.events.email_event import EmailSubscriber
+from src.base.user.events.user_create_event import UserCreateSubscriber
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
 from src.events.event_manager_factory import EventManagerFactory
@@ -11,5 +11,5 @@ class UserEventInitializer(Initialize):
 
         manager = EventManagerFactory()()
 
-        manager.subscribe(EmailSubscriber())
+        manager.subscribe(UserCreateSubscriber())
         container.register(EventManager, instance=manager)

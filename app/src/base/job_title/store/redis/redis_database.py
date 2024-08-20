@@ -12,7 +12,7 @@ class JobTitleRedisDatabase(JobTitleRepositoryInterface):
     async def create_item(self, item: JobTitleBaseModel) -> JobTitleBaseModel:
         async with self.__session as session:
             try:
-                await session.set(f"job_title:{item.job_title_id}", item.model_dump_json())
+                await session.set(f"job_title:{item.id}", item.model_dump_json())
                 return item
             except Exception as e:
                 raise JobTitleDatabaseError(str(e))
@@ -30,11 +30,11 @@ class JobTitleRedisDatabase(JobTitleRepositoryInterface):
     async def update_item(self, item: JobTitleBaseModel) -> None:
         async with self.__session as session:
             try:
-                item_data = await session.get(f"job_title:{item.job_title_id}")
+                item_data = await session.get(f"job_title:{item.id}")
                 if item_data:
-                    await session.set(f"job_title:{item.job_title_id}", item.model_dump_json())
+                    await session.set(f"job_title:{item.id}", item.model_dump_json())
                 else:
-                    raise JobTitleNotFoundError(f"Job title with ID {item.job_title_id} not found.")
+                    raise JobTitleNotFoundError(f"Job title with ID {item.id} not found.")
             except Exception as e:
                 raise JobTitleDatabaseError(str(e))
 

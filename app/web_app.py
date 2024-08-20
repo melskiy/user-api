@@ -13,6 +13,7 @@ async def run() -> None:
     await AppInitializer().initialize()
     await WebInitializer().initialize()
 
+
 if __name__ == '__main__':
     asyncio.run(run())
     app = container.resolve(FastAPI)

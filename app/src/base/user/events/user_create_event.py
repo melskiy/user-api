@@ -1,6 +1,6 @@
 from src.events.subscriber import Subscriber
 
 
-class EmailSubscriber(Subscriber):
+class UserCreateSubscriber(Subscriber):
     async def update(self):
         print("Отправлено на почту")
