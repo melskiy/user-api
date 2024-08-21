@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.base.user.exeptions.user_already_exists_error import UserAlreadyExistsError
-from src.base.user.exeptions.user_database_error import UserDatabaseError
+from src.base.user.exeptions.user_eternal_error import UserEternalError
 from src.base.user.exeptions.user_not_found_error import UserNotFoundError
 from src.base.user.store.adapters.user_db_adapter import user_adapter
 from src.base.user.store.interfaceses.user_repository_interface import UserRepositoryInterface
@@ -26,7 +26,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                 await session.commit()
             except Exception as e:
                 await session.rollback()
-                raise UserDatabaseError(str(e))
+                raise UserEternalError(str(e))
 
     async def read_item(self, item_id: str) -> UserBaseModel:
         async with self.__session() as session:
@@ -37,7 +37,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                 user = user_adapter(db_user)
                 return user
             except Exception as e:
-                raise UserDatabaseError(str(e))
+                raise UserEternalError(str(e))
 
     async def update_item(self, user: UserBaseModel) -> None:
         async with self.__session() as session:
@@ -51,7 +51,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                     raise UserNotFoundError()
             except Exception as e:
                 await session.rollback()
-                raise UserDatabaseError(str(e))
+                raise UserEternalError(str(e))
 
     async def delete_item(self, user_id: str) -> None:
         async with self.__session() as session:
@@ -64,4 +64,4 @@ class UserPostgresDatabase(UserRepositoryInterface):
                     raise UserNotFoundError()
             except Exception as e:
                 await session.rollback()
-                raise UserDatabaseError(str(e))
+                raise UserEternalError(str(e))

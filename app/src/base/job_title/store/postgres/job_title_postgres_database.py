@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.base.job_title.exeptions.job_title_database_error import JobTitleDatabaseError
+from src.base.job_title.exeptions.job_title_eternal_error import JobTitleEternalError
 from src.base.job_title.exeptions.job_title_not_found_error import JobTitleNotFoundError
 from src.base.job_title.store.adapters.job_title_adapter import job_title_adapter
 from src.base.job_title.store.adapters import job_title_db_adapter
@@ -22,7 +22,7 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                 await session.commit()
             except Exception as e:
                 await session.rollback()
-                raise JobTitleDatabaseError(str(e))
+                raise JobTitleEternalError(str(e))
 
     async def read_item(self, user_id: str) -> JobTitleBaseModel:
         async with self.__session() as session:
@@ -33,7 +33,7 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                 user = job_title_db_adapter(db_user)
                 return user
             except Exception as e:
-                raise JobTitleDatabaseError(str(e))
+                raise JobTitleEternalError(str(e))
 
     async def update_item(self, user: JobTitleBaseModel):
         async with self.__session() as session:
@@ -47,7 +47,7 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                     raise JobTitleNotFoundError(f"Job title with ID {user.user_id} not found.")
             except Exception as e:
                 await session.rollback()
-                raise JobTitleDatabaseError(str(e))
+                raise JobTitleEternalError(str(e))
 
     async def delete_item(self, user_id: str):
         async with self.__session() as session:
@@ -60,4 +60,4 @@ class JobTitlePostgresDatabase(JobTitleRepositoryInterface):
                     raise JobTitleNotFoundError(f"Job title with ID {user_id} not found.")
             except Exception as e:
                 await session.rollback()
-                raise JobTitleDatabaseError(str(e))
+                raise JobTitleEternalError(str(e))
