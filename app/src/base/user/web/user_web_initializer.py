@@ -37,6 +37,6 @@ class UserWebInitializer(Initialize):
         app.add_api_route("/get",
                           endpoint=GetDataView(container.resolve(GetUserService)).__call__,
                           status_code=status.HTTP_200_OK, name="Получение пользователя",
-                          methods=["GET"], response_model=JobTitleBaseModel)
+                          methods=["GET"])
 
         await UserExceptionHandlersInitializer(app).initialize()

@@ -1,6 +1,6 @@
 from src.base.user.models.user_base_model import UserBaseModel
 from src.events.event_manger import EventManager
-from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
+from src.base.user.store.interfaceses.user_repository_interface import UserRepositoryInterface
 
 
 class CreateUserService:
@@ -9,5 +9,5 @@ class CreateUserService:
         self.__event_manager = event_manager
 
     async def create(self, user: UserBaseModel) -> None:
-        await self.__repo.create_item(user)
         await self.__event_manager.notify()
+        await self.__repo.create_item(user)

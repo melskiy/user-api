@@ -5,7 +5,7 @@ from src.base.user.exeptions.user_already_exists_error import UserAlreadyExistsE
 from src.base.user.exeptions.user_database_error import UserDatabaseError
 from src.base.user.exeptions.user_not_found_error import UserNotFoundError
 from src.base.user.store.adapters.user_db_adapter import user_adapter
-from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
+from src.base.user.store.interfaceses.user_repository_interface import UserRepositoryInterface
 from src.base.user.models.user_base_model import UserBaseModel
 from src.base.user.store.models.user_db import UserDB
 
@@ -39,7 +39,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
             except Exception as e:
                 raise UserDatabaseError(str(e))
 
-    async def update_item(self, user: UserBaseModel):
+    async def update_item(self, user: UserBaseModel) -> None:
         async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user.user_id)
@@ -53,7 +53,7 @@ class UserPostgresDatabase(UserRepositoryInterface):
                 await session.rollback()
                 raise UserDatabaseError(str(e))
 
-    async def delete_item(self, user_id: str):
+    async def delete_item(self, user_id: str) -> None:
         async with self.__session() as session:
             try:
                 db_user = await session.get(UserDB, user_id)

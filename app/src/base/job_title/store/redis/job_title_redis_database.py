@@ -2,18 +2,17 @@ from redis.asyncio import Redis
 from src.base.job_title.exeptions.job_title_database_error import JobTitleDatabaseError
 from src.base.job_title.exeptions.job_title_not_found_error import JobTitleNotFoundError
 from src.base.job_title.models.job_title_base_model import JobTitleBaseModel
-from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
+from src.base.job_title.store.interfaceses.job_title_repository_interface import JobTitleRepositoryInterface
 
 
 class JobTitleRedisDatabase(JobTitleRepositoryInterface):
     def __init__(self, session: Redis):
         self.__session = session
 
-    async def create_item(self, item: JobTitleBaseModel) -> JobTitleBaseModel:
+    async def create_item(self, item: JobTitleBaseModel) -> None:
         async with self.__session as session:
             try:
                 await session.set(f"job_title:{item.id}", item.model_dump_json())
-                return item
             except Exception as e:
                 raise JobTitleDatabaseError(str(e))
 

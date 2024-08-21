@@ -1,4 +1,4 @@
-from src.base.user.events.UserEvent import UserEvent
+from src.base.user.events.user_event import UserEvent
 from src.events.subscriber import Subscriber
 
 
@@ -7,4 +7,4 @@ class UserCreateEvent(UserEvent):
         self.__event = event
 
     def __call__(self):
-        self.__event.update()
+        return self.__event

@@ -1,4 +1,4 @@
-from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
+from src.base.job_title.store.interfaceses.job_title_repository_interface import JobTitleRepositoryInterface
 
 
 class DeleteJobTitleService:

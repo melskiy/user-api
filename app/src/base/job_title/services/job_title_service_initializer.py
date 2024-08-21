@@ -1,4 +1,4 @@
-from src.base.job_title.store.interfaceses.repository_interface import JobTitleRepositoryInterface
+from src.base.job_title.store.interfaceses.job_title_repository_interface import JobTitleRepositoryInterface
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
 from src.base.job_title.services.create_job_title import CreateJobTitleService
@@ -10,7 +10,7 @@ from src.base.job_title.services.update_job_title import UpdateJobTitleService
 class JobTitleServiceInitializer(Initialize):
 
     async def initialize(self):
-        repo = container.resolve(JobTitleRepositoryInterface)
+        repo = container.resolve(JobTitleRepositoryInterface)()
         container.register(CreateJobTitleService, instance=CreateJobTitleService(repo))
         container.register(UpdateJobTitleService, instance=UpdateJobTitleService(repo))
         container.register(GetJobTitleService, instance=GetJobTitleService(repo))

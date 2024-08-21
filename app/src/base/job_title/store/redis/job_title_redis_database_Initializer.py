@@ -1,12 +1,15 @@
 import redis.asyncio as redis
-from src.base.job_title.store.redis.redis_database import JobTitleRedisDatabase
-from src.base.job_title.store.redis.redis_database_factory import JobTitleRedisDatabaseFactory
+
+from src.base.job_title.store.interfaceses.job_title_repository_interface import JobTitleRepositoryInterface
+from src.base.job_title.store.redis.job_title_redis_database_factory import JobTitleRedisDatabaseFactory
 from src.core.Initializer.interfaces.Initialize import Initialize
+from src.core.db.redis.get_redis_connection_factory import GetRedisConnectionFactory
 from src.core.ioc import container
 
 
 class JobTitleRedisDatabaseInitializer(Initialize):
 
     async def initialize(self):
-        redis_connect = await container.resolve(redis)
-        container.register(JobTitleRedisDatabase, instance=JobTitleRedisDatabaseFactory()(redis_connect))
+        settings = container.resolve(redis)
+        redis_connect = await GetRedisConnectionFactory()(settings)
+        container.register(JobTitleRepositoryInterface, instance=lambda: JobTitleRedisDatabaseFactory()(redis_connect))

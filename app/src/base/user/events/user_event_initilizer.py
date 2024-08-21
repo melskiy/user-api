@@ -12,5 +12,5 @@ class UserEventInitializer(Initialize):
 
         event_manager = EventManagerFactory()()
 
-        event_manager.subscribe(UserCreateEvent(EmailEvent))
+        event_manager.subscribe(UserCreateEvent(EmailEvent()).__call__())
         container.register(EventManager, instance=event_manager)

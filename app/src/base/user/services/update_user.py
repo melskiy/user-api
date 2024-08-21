@@ -1,4 +1,4 @@
-from src.base.user.store.interfaceses.repository_interface import UserRepositoryInterface
+from src.base.user.store.interfaceses.user_repository_interface import UserRepositoryInterface
 from src.base.user.models.user_base_model import UserBaseModel
 
 
