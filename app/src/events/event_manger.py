@@ -1,3 +1,4 @@
+from src.events.base.event import Event
 from src.events.subscriber import Subscriber
 
 
@@ -11,6 +12,6 @@ class EventManager:
     def unsubscribe(self, subscriber: Subscriber) -> None:
         self._subscribers.remove(subscriber)
 
-    async def notify(self) -> None:
+    async def notify(self, event: Event) -> None:
         for subscriber in self._subscribers:
-            await subscriber.update()
+            await subscriber.update(event)
