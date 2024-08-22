@@ -2,7 +2,8 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.base.job_title.exeptions.job_title_eternal_error import JobTitleEternalError
 from src.base.job_title.exeptions.job_title_not_found_error import JobTitleNotFoundError
-from src.base.job_title.store.postgres.adapters.job_title_adapter import job_title_adapter, job_title_db_adapter
+from src.base.job_title.store.postgres.adapters.job_title_adapter import job_title_adapter
+from src.base.job_title.store.postgres.adapters.job_title_db_adapter import job_title_db_adapter
 from src.base.job_title.store.postgres.models.job_title_db import JobTitleDB
 from src.base.job_title.store.interfaceses.job_title_repository_interface import JobTitleRepositoryInterface
 

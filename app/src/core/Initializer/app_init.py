@@ -9,17 +9,18 @@ from src.core.settings.builder.settings_builder_impl import SettingsBuilderImpl
 from src.core.settings.loader.impl.env_config_loader import EnvConfigLoader
 from src.core.db.postgres.postgres_settings import PostgresSettings
 from src.core.db.redis.redis_settings import RedisSettings
+from src.core.settings.loader.impl.yml_config_loader import YamlConfigLoader
 from src.core.settings.models.settings import Settings
 
 
 class AppInitializer(Initialize):
 
     async def initialize(self):
-        env_path = '.env'
+        path = 'config.yaml'
 
-        env_loader = EnvConfigLoader(env_path)
+        loader = YamlConfigLoader(path)
 
-        settings_builder = SettingsBuilderImpl([env_loader])
+        settings_builder = SettingsBuilderImpl([loader])
 
         config_data = settings_builder.build()
 
