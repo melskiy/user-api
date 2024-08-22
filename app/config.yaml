@@ -1,0 +1,13 @@
+HOST: localhost
+PORT: 11000
+REPOSITORY_TYPE: postgresql
+
+POSTGRESQL_DRIVER: postgresql+asyncpg
+POSTGRESQL_LOGIN: uogkckv783frmlizskuc
+POSTGRESQL_PASSWORD: yb8UN3DOmHXP0zUAqPjTUJ9yrXKzU3
+POSTGRESQL_BASE_HOST: betzl61w0vekzhymfy50-postgresql.services.clever-cloud.com
+POSTGRESQL_BASE_PORT: 50013
+POSTGRESQL_BASE_NAME: betzl61w0vekzhymfy50
+
+REDIS_HOST: localhost
+REDIS_PORT: 6379
