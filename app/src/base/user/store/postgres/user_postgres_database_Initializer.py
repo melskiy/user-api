@@ -12,3 +12,4 @@ class UserPostgresDatabaseInitializer(Initialize):
         settings = container.resolve(PostgresSettings)
         pg_connect = await GetPostgresConnectionFactory()(settings)
         container.register(UserRepositoryInterface, instanse=lambda: UserPostgresDatabaseFactory()(pg_connect))
+        print(container.resolve(UserRepositoryInterface))

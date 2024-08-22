@@ -18,7 +18,7 @@ class UserServiceInitializer(Initialize):
         event_manager.subscribe(UserCreateEventHandler())
         container.register(EventManager, instance=event_manager)
 
-        repo = container.resolve(UserRepositoryInterface)
+        repo = container.resolve(UserRepositoryInterface)()
         container.register(CreateUserService, instance=CreateUserService(repo, container.resolve(EventManager)))
         container.register(UpdateUserService, instance=UpdateUserService(repo))
         container.register(GetUserService, instance=GetUserService(repo))
