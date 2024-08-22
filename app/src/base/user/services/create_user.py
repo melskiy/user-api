@@ -10,6 +10,6 @@ class CreateUserService:
         self.__event_manager = event_manager
 
     async def create(self, user: UserBaseModel) -> None:
+        await self.__repo.create_item(user)
         event = UserCreatedEvent(user=user)
         await self.__event_manager.notify(event)
-        await self.__repo.create_item(user)
