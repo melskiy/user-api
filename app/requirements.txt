@@ -19,3 +19,4 @@ typing_extensions==4.12.2
 uvicorn==0.30.5
 rodi==2.0.6
 asyncclick~=8.1.7.2
+PyYAML~=6.0.2

@@ -1,5 +1,5 @@
 from src.base.user.models.user_base_model import UserBaseModel
-from src.base.user.store.models.user_db import UserDB
+from src.base.user.store.postgres.models.user_db import UserDB
 
 
 def user_adapter(userdb: UserDB) -> UserBaseModel:

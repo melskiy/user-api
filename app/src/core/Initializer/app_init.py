@@ -1,41 +1,61 @@
-import redis.asyncio as redis
-from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.base.job_title.services.job_title_service_initializer import JobTitleServiceInitializer
 from src.base.job_title.store.job_title_store_initialize import JobTitleStoreInitializer
-from src.base.user.events.user_event_initilizer import UserEventInitializer
 from src.base.user.services.user_service_initializer import UserServiceInitializer
 from src.base.user.store.user_store_initialize import UserStoreInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
-from src.core.db.postgres.get_postgre_connection_factory import GetPostgresConnectionFactory
-from src.core.db.redis.get_redis_connection_factory import GetRedisConnectionFactory
 from src.core.ioc import container
-from src.core.settings.postgres_settings import PostgresSettings
-from src.core.settings.redis_settings import RedisSettings
-from src.core.settings.settings import Settings
+from src.core.settings.builder.settings_builder_impl import SettingsBuilderImpl
+from src.core.settings.loader.impl.env_config_loader import EnvConfigLoader
+from src.core.db.postgres.postgres_settings import PostgresSettings
+from src.core.db.redis.redis_settings import RedisSettings
+from src.core.settings.models.settings import Settings
 
 
 class AppInitializer(Initialize):
 
     async def initialize(self):
-        settings = Settings(
-            _env_file=".env",
-            _env_file_encoding="utf-8",
+        env_path = '.env'
+
+        env_loader = EnvConfigLoader(env_path)
+
+        settings_builder = SettingsBuilderImpl([env_loader])
+
+        config_data = settings_builder.build()
+
+        redis_settings = RedisSettings(
+            redis_host=config_data.get('REDIS_HOST'),
+            redis_port=config_data.get('REDIS_PORT')
         )
-        container.register(Settings, instance=settings)
-        store_type = settings.repository_type
-        load_dotenv()
+
+        postgres_settings = PostgresSettings(
+            driver=config_data.get('POSTGRESQL_DRIVER'),
+            login=config_data.get('POSTGRESQL_LOGIN'),
+            password=config_data.get('POSTGRESQL_PASSWORD'),
+            base_host=config_data.get('POSTGRESQL_BASE_HOST'),
+            base_port=config_data.get('POSTGRESQL_BASE_PORT'),
+            base_name=config_data.get('POSTGRESQL_BASE_NAME')
+        )
+
+        app_settings = Settings(
+            host=config_data.get('HOST'),
+            port=config_data.get('PORT'),
+            repository_type=config_data.get('REPOSITORY_TYPE')
+        )
+
+        container.register(Settings, instance=app_settings)
+        store_type = app_settings.repository_type
+
         store_initializers = {
             'postgresql': lambda: container.register(
-                async_sessionmaker,
+                PostgresSettings,
                 instance=
-                PostgresSettings()
+                postgres_settings
             ),
             'redis': lambda: container.register(
-                redis,
+                RedisSettings,
                 instance=
-                RedisSettings()
+                redis_settings
             )
         }
 
@@ -43,5 +63,4 @@ class AppInitializer(Initialize):
         await UserStoreInitializer().initialize()
         await JobTitleStoreInitializer().initialize()
         await JobTitleServiceInitializer().initialize()
-        await UserEventInitializer().initialize()
         await UserServiceInitializer().initialize()

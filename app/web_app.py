@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from src.core.Initializer.app_init import AppInitializer
 from src.core.Initializer.web_init import WebInitializer
 from src.core.ioc import container
-from src.core.settings.settings import Settings
+from src.core.settings.models.settings import Settings
 
 
 async def run() -> None:

@@ -2,7 +2,7 @@ from src.base.user.store.postgres.user_postgres_database_Initializer import User
 from src.base.user.store.redis.user_redis_database_Initializer import UserRedisDatabaseInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
-from src.core.settings.settings import Settings
+from src.core.settings.models.settings import Settings
 
 
 class UserStoreInitializer(Initialize):

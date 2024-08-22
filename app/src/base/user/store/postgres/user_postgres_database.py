@@ -4,10 +4,10 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from src.base.user.exeptions.user_already_exists_error import UserAlreadyExistsError
 from src.base.user.exeptions.user_eternal_error import UserEternalError
 from src.base.user.exeptions.user_not_found_error import UserNotFoundError
-from src.base.user.store.adapters.user_db_adapter import user_adapter
+from src.base.user.store.postgres.adapters import user_adapter
 from src.base.user.store.interfaceses.user_repository_interface import UserRepositoryInterface
 from src.base.user.models.user_base_model import UserBaseModel
-from src.base.user.store.models.user_db import UserDB
+from src.base.user.store.postgres.models.user_db import UserDB
 
 
 class UserPostgresDatabase(UserRepositoryInterface):

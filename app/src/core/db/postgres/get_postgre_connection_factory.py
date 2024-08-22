@@ -3,7 +3,7 @@ from typing import Any, Coroutine
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from src.core.db.postgres.get_postgre_connection import get_postgres_connection
-from src.core.settings.postgres_settings import PostgresSettings
+from src.core.db.postgres.postgres_settings import PostgresSettings
 
 
 class GetPostgresConnectionFactory:

@@ -2,7 +2,7 @@ from src.base.job_title.store.postgres.job_title_postgres_database_initialize im
 from src.base.job_title.store.redis.job_title_redis_database_Initializer import JobTitleRedisDatabaseInitializer
 from src.core.Initializer.interfaces.Initialize import Initialize
 from src.core.ioc import container
-from src.core.settings.settings import Settings
+from src.core.settings.models.settings import Settings
 
 
 class JobTitleStoreInitializer(Initialize):

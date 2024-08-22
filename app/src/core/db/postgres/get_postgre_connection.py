@@ -1,18 +1,18 @@
 from sqlalchemy import URL
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
-from src.core.settings.postgres_settings import PostgresSettings
+from src.core.db.postgres.postgres_settings import PostgresSettings
 
 
 async def get_postgres_connection(settings: PostgresSettings) -> async_sessionmaker:
 
     connection_string = URL.create(
-        drivername=settings.postgresql_driver,
-        username=settings.postgresql_login,
-        password=settings.postgresql_password,
-        host=settings.postgresql_base_host,
-        port=settings.postgresql_base_port,
-        database=settings.postgresql_base_name,
+        drivername=settings.driver,
+        username=settings.login,
+        password=settings.password,
+        host=settings.base_host,
+        port=settings.base_port,
+        database=settings.base_name,
     )
 
     engine = create_async_engine(connection_string)

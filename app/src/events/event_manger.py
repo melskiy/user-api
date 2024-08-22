@@ -14,4 +14,4 @@ class EventManager:
 
     async def notify(self, event: Event) -> None:
         for subscriber in self._subscribers:
-            await subscriber.update(event)
+            subscriber.update(event)

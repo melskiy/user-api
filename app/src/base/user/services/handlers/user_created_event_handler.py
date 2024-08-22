@@ -4,4 +4,4 @@ from src.events.subscriber import Subscriber
 
 class UserCreateEventHandler(Subscriber):
     def update(self, event: UserCreatedEvent):
-        print("send email")
+        print(f"send {event.user.name} email")
