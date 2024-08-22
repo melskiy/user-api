@@ -11,7 +11,7 @@ from src.base.user.services.update_user import UpdateUserService
 class UserServiceInitializer(Initialize):
 
     async def initialize(self):
-        repo = container.resolve(UserRepositoryInterface)
+        repo = container.resolve(UserRepositoryInterface)()
         container.register(CreateUserService, instance=CreateUserService(repo, container.resolve(EventManager)))
         container.register(UpdateUserService, instance=UpdateUserService(repo))
         container.register(GetUserService, instance=GetUserService(repo))
