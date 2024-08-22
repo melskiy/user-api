@@ -16,9 +16,9 @@ from src.core.settings.models.settings import Settings
 class AppInitializer(Initialize):
 
     async def initialize(self):
-        path = 'config.yaml'
+        path = '.env'
 
-        loader = YamlConfigLoader(path)
+        loader = EnvConfigLoader(path)
 
         settings_builder = SettingsBuilderImpl([loader])
 
