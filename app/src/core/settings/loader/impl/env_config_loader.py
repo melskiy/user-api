@@ -1,8 +1,10 @@
 import os
 from dotenv import load_dotenv
 
+from src.core.settings.loader.interfaces.config_loader import ConfigLoader
 
-class EnvConfigLoader:
+
+class EnvConfigLoader(ConfigLoader):
     def __init__(self, path: str):
         self.path = path
 
